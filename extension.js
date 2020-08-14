@@ -18,24 +18,24 @@ function activate(context) {
 				}
 			}
 		});
-		let viewColumn = vscode.window.activeTextEditor.viewColumn;
-		if (viewColumn < largest) {
+		if (!vscode.window.activeTextEditor) {
 			vscode.commands.executeCommand("workbench.action.nextEditor");
+		} else {
+			let viewColumn = vscode.window.activeTextEditor.viewColumn;
+			if (viewColumn < largest) {
+				vscode.commands.executeCommand("workbench.action.nextEditor");
+			}
 		}
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('dzhou121.previousEditor', function () {
-		var smallest = 0;
-		vscode.window.visibleTextEditors.forEach(item => {
-			if (item.viewColumn) {
-				if (item.viewColumn < smallest) {
-					smallest = item.viewColumn;
-				}
-			}
-		});
-		let viewColumn = vscode.window.activeTextEditor.viewColumn;
-		if (viewColumn > smallest) {
+		if (!vscode.window.activeTextEditor) {
 			vscode.commands.executeCommand("workbench.action.previousEditor");
+		} else {
+			let viewColumn = vscode.window.activeTextEditor.viewColumn;
+			if (viewColumn > 1) {
+				vscode.commands.executeCommand("workbench.action.previousEditor");
+			}
 		}
 	}));
 }
