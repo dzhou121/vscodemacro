@@ -45,6 +45,7 @@ function activate(context) {
 			return;
 		}
 		let oldViewColumn = vscode.window.activeTextEditor.viewColumn;
+		console.log(oldViewColumn);
 		let listener = vscode.window.onDidChangeActiveTextEditor(function (editor) {
 			listener.dispose();
 			if (editor == null) {
@@ -65,7 +66,7 @@ function activate(context) {
 					}
 				}
 			});
-			if (newViewColumn == largest) {
+			if (oldViewColumn == largest) {
 				return;
 			}
 			if (newViewColumn < oldViewColumn) {
