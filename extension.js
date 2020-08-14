@@ -19,22 +19,22 @@ function activate(context) {
 			}
 		});
 		if (!vscode.window.activeTextEditor) {
-			vscode.commands.executeCommand("workbench.action.nextEditor");
+			vscode.commands.executeCommand("workbench.action.focusNextGroup");
 		} else {
 			let viewColumn = vscode.window.activeTextEditor.viewColumn;
-			if (viewColumn < largest) {
-				vscode.commands.executeCommand("workbench.action.nextEditor");
+			if (viewColumn == null || viewColumn < largest) {
+				vscode.commands.executeCommand("workbench.action.focusNextGroup");
 			}
 		}
 	}));
 
 	context.subscriptions.push(vscode.commands.registerCommand('dzhou121.previousEditor', function () {
 		if (!vscode.window.activeTextEditor) {
-			vscode.commands.executeCommand("workbench.action.previousEditor");
+			vscode.commands.executeCommand("workbench.action.focusPreviousGroup");
 		} else {
 			let viewColumn = vscode.window.activeTextEditor.viewColumn;
-			if (viewColumn > 1) {
-				vscode.commands.executeCommand("workbench.action.previousEditor");
+			if (viewColumn == null || viewColumn > 1) {
+				vscode.commands.executeCommand("workbench.action.focusPreviousGroup");
 			}
 		}
 	}));
