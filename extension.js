@@ -38,6 +38,42 @@ function activate(context) {
 			}
 		}
 	}));
+
+	context.subscriptions.push(vscode.commands.registerCommand('dzhou121.closeEditor', function () {
+		if (vscode.window.activeTextEditor == null) {
+			vscode.commands.executeCommand("workbench.action.closeActiveEditor");
+			return;
+		}
+		let oldViewColumn = vscode.window.activeTextEditor.viewColumn;
+		let listener = vscode.window.onDidChangeActiveTextEditor(function (editor) {
+			listener.dispose();
+			if (editor == null) {
+				return;
+			}
+			let newViewColumn = editor.viewColumn;
+			if (oldViewColumn == null || newViewColumn == null) {
+				return;
+			}
+			if (oldViewColumn == newViewColumn) {
+				return;
+			}
+			var largest = 0;
+			vscode.window.visibleTextEditors.forEach(item => {
+				if (item.viewColumn) {
+					if (item.viewColumn > largest) {
+						largest = item.viewColumn;
+					}
+				}
+			});
+			if (newViewColumn == largest) {
+				return;
+			}
+			if (newViewColumn < oldViewColumn) {
+				vscode.commands.executeCommand("workbench.action.focusNextGroup");
+			}
+		});
+		vscode.commands.executeCommand("workbench.action.closeActiveEditor");
+	}));
 }
 exports.activate = activate;
 
